@@ -1,3 +1,9 @@
+def encrypt(k, m):
+    return ''.join(map(chr, [x + k for x in map(ord, m)]))
+
+def decrypt(k, c):
+    return ''.join(map(chr, [x - k for x in map(ord, c)]))
+
 def caesar_encrypt(k, plaintext):
     ciphertext = ''
     for char in plaintext:
@@ -17,12 +23,20 @@ def caesar_encrypt(k, plaintext):
 def caesar_decrypt(k, ciphertext):
     return caesar_encrypt(-k, ciphertext)  # Decrypt by shifting in the opposite direction
 
-# Test the Caesar cipher functions
-plaintext = 'Hello, World!'
-key = 3
-encrypted_text = caesar_encrypt(key, plaintext)
-decrypted_text = caesar_decrypt(key, encrypted_text)
+def caesar_break(ciphertext):
+    for key in range(26):  # Try all possible keys
+        decrypted_text = caesar_decrypt(key, ciphertext)
+        print(f'Key = {key}: {decrypted_text}')
 
-print('Original Text:', plaintext)
-print('Encrypted Text:', encrypted_text)
-print('Decrypted Text:', decrypted_text)
+if __name__ == "__main__":
+    plaintext = 'Hello, World!'
+    key = 3
+    encrypted_text = caesar_encrypt(key, plaintext)
+    decrypted_text = caesar_decrypt(key, encrypted_text)
+
+    print('Original Text:', plaintext)
+    print('Encrypted Text:', encrypted_text)
+    print('Decrypted Text:', decrypted_text)
+    # Test breaking the Caesar cipher without knowing the key
+    encrypted_text_to_break = 'Khoor, Zruog!'
+    caesar_break(encrypted_text_to_break)
